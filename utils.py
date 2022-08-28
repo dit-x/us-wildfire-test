@@ -57,6 +57,12 @@ def subdata(df: pd.DataFrame) -> pd.DataFrame:
                 .count()\
                 .rename(columns={'OBJECTID':"count"})\
                 .reset_index()
+
+    month_year_couse_counts = df[["DISC_YM", "STAT_CAUSE_DESCR", "OBJECTID"]]\
+                        .groupby(["DISC_YM", "STAT_CAUSE_DESCR"])\
+                        .count()\
+                        .rename(columns={'OBJECTID':"count"})\
+                        .reset_index()
                     
     county_counts = df['FIPS_NAME'].value_counts()\
                         .to_frame()\
@@ -64,10 +70,10 @@ def subdata(df: pd.DataFrame) -> pd.DataFrame:
                         .rename(columns={'FIPS_NAME':"count", "index":'FIPS_NAME'})\
                         .sort_values(by='count', ascending=False)
 
-    return cause_counts, year_counts, month_year_counts, county_counts
+    return cause_counts, year_counts, month_year_counts, county_counts, month_year_couse_counts
 
 
-def trend_plot(month_year_counts: pd.DataFrame):
+def trend_plot(month_year_counts: pd.DataFrame, width: int=800):
     trend_fig = go.Figure()
 
     trend_fig.add_trace(
@@ -85,7 +91,7 @@ def trend_plot(month_year_counts: pd.DataFrame):
                         "xaxis": {"title":"Date(Month-Year)"}
                     },
                     height=600,
-                    width=1000,
+                    width=width,
                     )
 
     trend_fig.update_traces(texttemplate = "%{x} | %{y}")
@@ -94,7 +100,7 @@ def trend_plot(month_year_counts: pd.DataFrame):
     return trend_fig
 
 
-def view_county(county_counts: pd.DataFrame, tail: bool=False, count: int=50):
+def view_county(county_counts: pd.DataFrame, tail: bool=False, count: int=50, width: int=800):
 
     if tail:
         title = "Least Fire-prone Counties"
@@ -117,7 +123,7 @@ def view_county(county_counts: pd.DataFrame, tail: bool=False, count: int=50):
                         "yaxis": {"title":"Number of Wildfires"},
                         "xaxis": {"title":"County Names"}
                     },
-                    width=1000,
+                    width=width,
                     )
     if count > 30:
         # add slider
@@ -129,6 +135,7 @@ def bar_plot(df: pd.DataFrame,
             x: str,
             y: str,
             labels: dict,
+            width=800,
             title=None,
             color=None):
 
@@ -137,7 +144,7 @@ def bar_plot(df: pd.DataFrame,
                 labels=labels, 
                 text_auto='.2s',
                 height=500,
-                width=800,
+                width=width,
                 title=title)
     return fig
 
@@ -164,6 +171,56 @@ def year_filter(check=""):
             years.append(2011)
     return years
 
+def cause_filter(check=""):
+    causes = ['Debris Burning', 'Miscellaneous', 'Arson', 'Lightning', 
+                'Equipment Use', 'Campfire', 'Children', 'Smoking', 
+                'Railroad', 'Powerline', 'Fireworks', 'Structure']
+
+    st.markdown("#### `Filter and compare cause trends`") 
+    col0, col1, col2, col3, col4, col5 = st.columns(6)
+    col6, col7, col8, col9, col10, col11 = st.columns(6)
+    filters_cause = []
+    # with col0:
+    with col0:
+        if st.checkbox(causes[0] + check):
+            filters_cause.append(causes[0])
+    with col1:
+        if st.checkbox("Miscellan- eous" + check):
+            filters_cause.append(causes[1])
+    with col2:
+        if st.checkbox(causes[2] + check):
+            filters_cause.append(causes[2])
+    with col3:
+        if st.checkbox(causes[3] + check):
+            filters_cause.append(causes[3])
+    with col4:
+        if st.checkbox(causes[4] + check):
+            filters_cause.append(causes[4])
+    with col5:
+        if st.checkbox(causes[5] + check):
+            filters_cause.append(causes[5])
+
+    with col6:
+        if st.checkbox(causes[6] + check):
+            filters_cause.append(causes[6])
+    with col7:
+        if st.checkbox(causes[7] + check):
+            filters_cause.append(causes[7])
+    with col8:
+        if st.checkbox(causes[8] + check):
+            filters_cause.append(causes[8])
+    with col9:
+        if st.checkbox(causes[9] + check):
+            filters_cause.append(causes[9])
+    with col10:
+        if st.checkbox(causes[10] + check):
+            filters_cause.append(causes[10])
+    with col11:
+        if st.checkbox(causes[11] + check):
+            filters_cause.append(causes[11])
+
+    return filters_cause
+
 
 def filter_df_by_year(df, years, data):
     df_filter = df[df["FIRE_YEAR"].isin(years) ]
@@ -184,3 +241,19 @@ def filter_df_by_year(df, years, data):
                         .reset_index()
 
     return filter_data
+
+def slider(
+        min_value: int,
+        max_value: int,
+        default_value: int,
+        info: str,
+        text: str='x'
+        ):
+    st.write(info)
+    x = st.slider(text, 
+                min_value=min_value, 
+                max_value=max_value, 
+                value=default_value
+                ) 
+
+    return x
