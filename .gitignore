@@ -1,0 +1,7 @@
+*.csv*
+*.sqlite
+*.zip
+wiz*
+*.
+.DS_Store
+.ipynb_checkpoints/*
