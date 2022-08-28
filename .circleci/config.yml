@@ -1,2 +1,40 @@
 version: 2.1
 
+jobs:
+  test-data:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+
+      - run:
+          name: Installing dependenies
+          command: |
+            pip install -r requirements
+
+      - run:
+          name: Run test
+          command: pytest test.py
+
+  build-app:
+    docker:
+      - image: python:3.7.3-stretch
+    steps:
+      - checkout
+
+      - run:
+          name: Installing dependenies
+          command: |
+            pip install -r requirements
+
+      - run:
+          name: Run test
+          command: python app.py
+
+workflows:
+  default:
+    jobs:
+      - test-data
+      - build-app:
+          requires: [test-data]
+            
