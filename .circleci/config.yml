@@ -4,12 +4,14 @@ jobs:
   test-data:
     docker:
       - image: python:3.8.13-slim
+    working_directory: ~/project
     steps:
       - checkout
 
       - run:
           name: Installing dependenies
           command: |
+            ls
             pip install -r requirements.txt
 
       - run:
@@ -18,7 +20,8 @@ jobs:
 
   build-app:
     docker:
-      - image: python:3.7.3-stretch
+      - image: python:3.8.13-slim
+    working_directory: ~/project
     steps:
       - checkout
 
