@@ -9,32 +9,9 @@ import plotly.graph_objects as go
 
 
 
-@st.cache
-def load_data(path: str='FPA_FOD_20170508.sqlite', nrows: int=10000) -> pd.DataFrame:
-    connect = f'sqlite:///{path}'
-    engine = create_engine(connect)
-
-    if nrows != 'all':
-        data = pd.read_sql_query(f"""
-            SELECT
-                *, 
-                datetime(DISCOVERY_DATE) as DIS_DATETIME,
-                datetime(CONT_DATE) as CON_DATETIME
-            FROM 
-                Fires 
-            LIMIT {nrows};
-            """ , engine)
-    else:
-        data = pd.read_sql_query(f"""
-            SELECT
-                *, 
-                datetime(DISCOVERY_DATE) as DIS_DATETIME,
-                datetime(CONT_DATE) as CON_DATETIME
-            FROM 
-                Fires 
-            """ , engine)
-    data['DISC_YM'] = data['DIS_DATETIME'].str.extract(r'(\d{4}-\d{2})')
-
+# @st.cache
+def load_data(path: str='sample_fire.csv', nrow=None) -> pd.DataFrame:
+    data = pd.read_csv(path, nrows=nrow)
     return data
 
 

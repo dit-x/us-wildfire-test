@@ -1,4 +1,3 @@
-from turtle import width
 import streamlit as st
 import plotly.express as px
 
@@ -16,7 +15,7 @@ st.title('1.88 Million US Wildfires')
 
 
 data_load_state = st.text('Loading data...')
-df = load_data(nrows='all')
+df = load_data()
 
 cause_counts, year_counts, month_year_counts, county_counts, month_year_couse_counts = subdata(df)
 
