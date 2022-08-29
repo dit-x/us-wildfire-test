@@ -3,15 +3,38 @@ import pandas as pd
 import numpy as np
 import time
 from sqlalchemy import create_engine
+import subprocess
 
 import plotly.express as px
 import plotly.graph_objects as go
 
 
+@st.cache
+def load_data(path: str='FPA_FOD_20170508.sqlite', nrows=None) -> pd.DataFrame:
+    connect = f'sqlite:///{path}'
+    engine = create_engine(connect)
 
-# @st.cache
-def load_data(path: str='sample_fire.csv', nrow=None) -> pd.DataFrame:
-    data = pd.read_csv(path, nrows=nrow)
+    if nrows != None:
+        data = pd.read_sql_query(f"""
+            SELECT
+                *, 
+                datetime(DISCOVERY_DATE) as DIS_DATETIME,
+                datetime(CONT_DATE) as CON_DATETIME
+            FROM 
+                Fires 
+            LIMIT {nrows};
+            """ , engine)
+    else:
+        data = pd.read_sql_query(f"""
+            SELECT
+                *, 
+                datetime(DISCOVERY_DATE) as DIS_DATETIME,
+                datetime(CONT_DATE) as CON_DATETIME
+            FROM 
+                Fires 
+            """ , engine)
+    data['DISC_YM'] = data['DIS_DATETIME'].str.extract(r'(\d{4}-\d{2})')
+
     return data
 
 

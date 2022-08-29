@@ -8,10 +8,6 @@ from utils import (
 )
 
 st.title('1.88 Million US Wildfires')
-# st.header("Analysis Summary")
-# st.write("""
-#     After carefully summar
-# """)
 
 
 data_load_state = st.text('Loading data...')
@@ -96,7 +92,9 @@ with st.container():
 with st.container():
     st.subheader("Time Analysis of Wildfire")
     st.write("""
-    To better understand the wildfire trend with the observed years, 
+    The time analysis in the chart below shows how the fire incident happen over the years. Each point of 
+    the chart represent months for a particular year. The flltering button is used to filter and compare 
+    wildfire trend (awesome discovery when filtered by `Arson` and `Fireworks`) 
     """)
 
     filters_cause = cause_filter()
