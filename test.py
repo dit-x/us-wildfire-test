@@ -1,6 +1,5 @@
 from utils import load_data
 
-df = load_data(nrow=100)
 
 expected_columns = ['OBJECTID', 'FOD_ID', 'FPA_ID', 'SOURCE_SYSTEM_TYPE', 
     'SOURCE_SYSTEM', 'NWCG_REPORTING_AGENCY', 'NWCG_REPORTING_UNIT_ID', 
@@ -14,12 +13,12 @@ expected_columns = ['OBJECTID', 'FOD_ID', 'FPA_ID', 'SOURCE_SYSTEM_TYPE',
     'DISCOVERY_TIME', 'STAT_CAUSE_CODE', 
     'STAT_CAUSE_DESCR', 'CONT_DATE', 'CONT_DOY', 'CONT_TIME', 
     'FIRE_SIZE', 'FIRE_SIZE_CLASS', 'LATITUDE', 'LONGITUDE', 'OWNER_CODE',
-    'OWNER_DESCR', 'STATE', 'COUNTY', 'FIPS_CODE', 'FIPS_NAME', 'DIS_DATETIME',
-     'CON_DATETIME', 'DISC_YM']
+    'OWNER_DESCR', 'STATE', 'COUNTY', 'FIPS_CODE', 'FIPS_NAME', 'Shape',
+    'DIS_DATETIME','CON_DATETIME', 'DISC_YM']
 
 
 def test_df_columns():
-    df = load_data(nrow=100)
+    df = load_data(nrows=100)
     df_column = list(df.columns)
 
     assert df_column == expected_columns
