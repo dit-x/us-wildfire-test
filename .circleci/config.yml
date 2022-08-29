@@ -1,2 +1,27 @@
 version: 2.1
 
+jobs:
+  lint-app:
+    docker:
+      - image: python:3.10-slim
+    working_directory: ~/project
+    steps:
+      - checkout
+
+      - run:
+          name: Install 
+          command: |
+            apt-get update 
+            apt install -y make
+            make install
+      - run:
+          name: Lint 
+          command: |
+            pip install pylint
+            make lint
+
+workflows:
+  default:
+    jobs:
+      - lint-app
+            

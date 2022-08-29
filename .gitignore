@@ -1,7 +1,14 @@
-*.csv*
+
 *.sqlite
 *.zip
 wiz*
 *.
 .DS_Store
 .ipynb_checkpoints/*
+data/*
+.kaggle/*
+other/*
+__pycache__/*
+catboost_info/*
+test (1).ipynb
+cb_clf_2.pkl

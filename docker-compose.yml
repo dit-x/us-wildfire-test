@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  wildfire-app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ~/.kaggle/:/root/.kaggle:ro
+      # - ./:/wildfires_project
+    ports:
+      - 8502:8501
+
+    command: streamlit run app.py
+      
+      

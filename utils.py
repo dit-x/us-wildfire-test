@@ -3,21 +3,26 @@ import pandas as pd
 import numpy as np
 import time
 from sqlalchemy import create_engine
+import subprocess
 
 import plotly.express as px
 import plotly.graph_objects as go
 
 
-
 @st.cache
-def load_data(path: str='FPA_FOD_20170508.sqlite', nrows: int=10000) -> pd.DataFrame:
+def load_data(path: str='FPA_FOD_20170508.sqlite', nrows=None) -> pd.DataFrame:
     connect = f'sqlite:///{path}'
     engine = create_engine(connect)
 
-    if nrows != 'all':
+    if nrows != None:
         data = pd.read_sql_query(f"""
             SELECT
-                *, 
+                OBJECTID, FIRE_CODE, 
+                FIRE_NAME, FIRE_YEAR, DISCOVERY_DOY, 
+                DISCOVERY_TIME, STAT_CAUSE_CODE, 
+                STAT_CAUSE_DESCR, CONT_DATE, CONT_DOY, CONT_TIME, 
+                FIRE_SIZE, FIRE_SIZE_CLASS, LATITUDE, LONGITUDE, OWNER_CODE,
+                STATE, COUNTY, FIPS_CODE, FIPS_NAME,
                 datetime(DISCOVERY_DATE) as DIS_DATETIME,
                 datetime(CONT_DATE) as CON_DATETIME
             FROM 
@@ -27,7 +32,12 @@ def load_data(path: str='FPA_FOD_20170508.sqlite', nrows: int=10000) -> pd.DataF
     else:
         data = pd.read_sql_query(f"""
             SELECT
-                *, 
+                OBJECTID, FIRE_CODE, 
+                FIRE_NAME, FIRE_YEAR, DISCOVERY_DOY, 
+                DISCOVERY_TIME, STAT_CAUSE_CODE, 
+                STAT_CAUSE_DESCR, CONT_DATE, CONT_DOY, CONT_TIME, 
+                FIRE_SIZE, FIRE_SIZE_CLASS, LATITUDE, LONGITUDE, OWNER_CODE,
+                STATE, COUNTY, FIPS_CODE, FIPS_NAME,
                 datetime(DISCOVERY_DATE) as DIS_DATETIME,
                 datetime(CONT_DATE) as CON_DATETIME
             FROM 
@@ -257,3 +267,21 @@ def slider(
                 ) 
 
     return x
+
+
+def get_class(x):
+    if x > 5000.00:
+            size = 'G'
+    elif x >= 1000.00:
+        size = "F"
+    elif x >= 300.00:
+        size = "E"
+    elif x >= 100.00:
+        size = "D"
+    elif x >= 10.00:
+        size = "C"
+    elif x >= 0.26:
+        size = "B"
+    elif x < 0.25:
+        size = "A"
+    return size
