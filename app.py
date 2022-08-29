@@ -1,11 +1,14 @@
 import streamlit as st
 import plotly.express as px
+import datetime
 
 from utils import (
     load_data, subdata, trend_plot, 
     view_county, bar_plot, year_filter,
-    filter_df_by_year, slider, cause_filter
+    filter_df_by_year, slider, cause_filter,
+    get_class
 )
+from predict import predict_cause
 
 st.title('1.88 Million US Wildfires')
 
@@ -18,6 +21,33 @@ cause_counts, year_counts, month_year_counts, county_counts, month_year_couse_co
 if st.checkbox('Show raw data'):
     st.subheader('Raw data') 
     st.write(df.head(20))
+
+with st.container():
+    st.subheader("Predict Cause")
+    st.write('The model accuracy is quite low and ')
+
+    input_size = st.number_input('FIZE SIZE', min_value=0.0, value=10.0)
+    size_class = get_class(input_size)
+
+    input_date = st.date_input( "DATE", datetime.date(2015, 7, 6))
+
+    st.write('LOCATION')
+    col0, col1 = st.columns(2)
+    with col0:
+        latitude = st.number_input('latitude', min_value=-90.0,  max_value=90.0, value=10.0)
+    with col1:
+        longitude = st.number_input('longitude', min_value=-180.0,  max_value=180.0, value=-30.0)
+
+    input_list = [input_size, size_class, latitude, longitude, input_date]
+    print(input_list)
+
+    col0, col1 = st.columns(2)
+    with col0:
+        if st.button('Predict Result'):
+            result = predict_cause(input_list)
+            with col1:
+                st.write(f'### Predicted Cause: `{result}`')
+
 
 with st.container():
     st.subheader("County Analysis")
