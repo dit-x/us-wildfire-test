@@ -2,43 +2,31 @@ version: 2.1
 
 jobs:
   test-data:
-    docker:
-      - image: python:3.8.13-slim
-    working_directory: ~/project
-    steps:
-      - checkout
-
-      - run:
-          name: Installing dependenies
-          command: |
-            ls
-            pip install -r requirements.txt
-
-      - run:
-          name: Run test
-          command: pytest test.py
 
   build-app:
     docker:
-      - image: python:3.8.13-slim
+      - image: python:3.10-slim
     working_directory: ~/project
     steps:
       - checkout
 
       - run:
-          name: Installing dependenies
+          name: Install 
           command: |
-            ls
-            pip install -r requirements.txt
-
+            apt-get update
+            make install
       - run:
-          name: Run test
-          command: python app.py
+          name: Download file
+          command: make download_file
+      - run:
+          name: Test 
+          command: make test
+      - run:
+          name: Lint 
+          command: make lint
 
 workflows:
   default:
     jobs:
       - test-data
-      - build-app:
-          requires: [test-data]
             
