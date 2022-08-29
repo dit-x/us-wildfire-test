@@ -6,3 +6,6 @@ wiz*
 .DS_Store
 .ipynb_checkpoints/*
 data/*
+.kaggle/*
+other/*
+__pycache__/*
