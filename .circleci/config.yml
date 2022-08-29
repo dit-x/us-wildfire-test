@@ -1,9 +1,7 @@
 version: 2.1
 
 jobs:
-  test-data:
-
-  build-app:
+  test-app:
     docker:
       - image: python:3.10-slim
     working_directory: ~/project
@@ -28,5 +26,5 @@ jobs:
 workflows:
   default:
     jobs:
-      - test-data
+      - test-app
             
