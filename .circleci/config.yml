@@ -1,7 +1,7 @@
 version: 2.1
 
 jobs:
-  test-app:
+  lint-app:
     docker:
       - image: python:3.10-slim
     working_directory: ~/project
@@ -15,17 +15,11 @@ jobs:
             apt install -y make
             make install
       - run:
-          name: Download file
-          command: make download_file
-      - run:
-          name: Test 
-          command: make test
-      - run:
           name: Lint 
           command: make lint
 
 workflows:
   default:
     jobs:
-      - test-app
+      - lint-app
             
