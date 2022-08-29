@@ -16,7 +16,9 @@ jobs:
             make install
       - run:
           name: Lint 
-          command: make lint
+          command: |
+            pip install pylint
+            make lint
 
 workflows:
   default:
