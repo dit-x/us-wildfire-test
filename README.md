@@ -8,6 +8,7 @@ This is the manual part of the setup to download the dataset directly for Kaggle
 - Navigate to `Account` page
 - In the API section, create New API Token.
 - Move the downloaded file to `~/.kaggle` folder
+
 DONE!!!
 
 ## Environment Setup
@@ -40,6 +41,5 @@ setup:
 
 # Output
 If the prject is running the web page should show similar output in the picture below
-! [alt text](sample_image.png)
 
 <img src="sample_image.png" alt="Alt text" title="Optional title">
