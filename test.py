@@ -1,5 +1,7 @@
-from utils import load_data
+import pandas as pd
 
+def load_data(path: str='fire_table_for_analysis.parquet') -> pd.DataFrame:
+    return pd.read_parquet(path)
 
 expected_columns = ['OBJECTID', 'FIRE_CODE', 
     'FIRE_NAME', 'FIRE_YEAR', 'DISCOVERY_DOY', 
@@ -11,7 +13,7 @@ expected_columns = ['OBJECTID', 'FIRE_CODE',
 
 
 def test_df_columns():
-    df = load_data(nrows=100)
+    df = load_data()
     df_column = list(df.columns)
 
     assert df_column == expected_columns
