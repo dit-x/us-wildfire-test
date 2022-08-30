@@ -12,3 +12,4 @@ __pycache__/*
 catboost_info/*
 test (1).ipynb
 cb_clf_2.pkl
+.dockerignore
