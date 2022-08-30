@@ -13,12 +13,16 @@ jobs:
           command: |
             apt-get update 
             apt install -y make
-            make install
+            pip install pandas
       - run:
           name: Lint 
           command: |
             pip install pylint
             make lint
+      - run:
+          name: Test 
+          command: |
+            make test
 
 workflows:
   default:
