@@ -8,12 +8,6 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY /.kaggle  /root/.kaggle
-
 COPY . .
 
-RUN kaggle datasets download -d rtatman/188-million-us-wildfires
-
-RUN apt-get install -y unzip && \
-    unzip 188-million-us-wildfires.zip
 

@@ -21,4 +21,4 @@ lint:
 run:
 	streamlit run app.py
 
-all: install download_file test lint run
+all: install test lint run
