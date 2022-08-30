@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import pickle
 
 import datetime
@@ -48,14 +47,14 @@ def prepare_input_value(list_input):
 def predict_cause(sample):
 
     input_ = prepare_input_value(sample)
-    model = pickle.load(open("cb_clf.pkl", "rb" ))
+    model = pickle.load(open("xb_clf.pkl", "rb" ))
     y_pred = model.predict(input_)
     cause_map = {0:'Miscellaneous',1: 'Lightning', 2: 'Debris Burning', 
                  3: 'Campfire', 4: 'Equipment Use', 5: 'Arson', 6: 'Children',
                  7: 'Railroad', 8: 'Smoking', 9: 'Powerline', 10: 'Structure', 
                  11: 'Fireworks', 12: 'Missing/Undefined'}
     print(y_pred)
-    return cause_map[y_pred[0][0]]
+    return cause_map[y_pred[0]]
     
 
 
