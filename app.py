@@ -24,7 +24,7 @@ if st.checkbox('Show raw data'):
 
 with st.container():
     st.subheader("Predict Cause")
-    st.write('The model accuracy is quite low and ')
+    st.write('The model accuracy is quite low')
 
     input_size = st.number_input('FIZE SIZE', min_value=0.0, value=10.0)
     size_class = get_class(input_size)

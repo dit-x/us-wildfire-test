@@ -1,15 +1,9 @@
 # Introduction
-This is a guide to replicate the project locally or using docker. It is important to know that there will be some manual steps to download the data from Kaggle to your local environment or docker container. The steps will be indicated below.
+To complete the task, the app was deployed using streamlit, and the step to replicate the deployment is stated below.
 
 # Project Setup
-## Kaggle API Setup
-This is the manual part of the setup to download the dataset directly for Kaggle use [Kaggle API](https://www.kaggle.com/docs/api). Here are the steps to follow: 
-- Login to Kaggle.com
-- Navigate to `Account` page
-- In the API section, create New API Token.
-- Move the downloaded file to `~/.kaggle` folder
+`Note` for optimization reasons, the application is deployed using only the data required to conduct the analysis and generate reports on a web page. To use the original data from Kaggle, follow the [Dev branch](https://github.com/dit-x/us-wildfire-test/tree/dev) readme
 
-DONE!!!
 
 ## Environment Setup
 ### `Using Docker`
@@ -39,7 +33,17 @@ setup:
     # source .venv/bin/activate
 ```
 
+# Usage
+### `Cause prediction`
+To predict the fire cause using the web app, the app takes in the fire size, date, and location (lat and long). Once all the parameters are provided, generate the result using the `Predict Result` button.
+### `Report`
+Here are the things to know
+- use the checkbox to filter and compare
+- use the slider to increase or decrease the number of records fetched
+
+
+
 # Output
-If the prject is running the web page should show similar output in the picture below
+If the project is running, the web page should show similar output in the picture below.
 
 <img src="sample_image.png" alt="Alt text" title="Optional title">
