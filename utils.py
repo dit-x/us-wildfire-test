@@ -1,51 +1,13 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-import time
-from sqlalchemy import create_engine
-import subprocess
 
 import plotly.express as px
 import plotly.graph_objects as go
 
 
 @st.cache
-def load_data(path: str='FPA_FOD_20170508.sqlite', nrows=None) -> pd.DataFrame:
-    connect = f'sqlite:///{path}'
-    engine = create_engine(connect)
-
-    if nrows != None:
-        data = pd.read_sql_query(f"""
-            SELECT
-                OBJECTID, FIRE_CODE, 
-                FIRE_NAME, FIRE_YEAR, DISCOVERY_DOY, 
-                DISCOVERY_TIME, STAT_CAUSE_CODE, 
-                STAT_CAUSE_DESCR, CONT_DATE, CONT_DOY, CONT_TIME, 
-                FIRE_SIZE, FIRE_SIZE_CLASS, LATITUDE, LONGITUDE, OWNER_CODE,
-                STATE, COUNTY, FIPS_CODE, FIPS_NAME,
-                datetime(DISCOVERY_DATE) as DIS_DATETIME,
-                datetime(CONT_DATE) as CON_DATETIME
-            FROM 
-                Fires 
-            LIMIT {nrows};
-            """ , engine)
-    else:
-        data = pd.read_sql_query(f"""
-            SELECT
-                OBJECTID, FIRE_CODE, 
-                FIRE_NAME, FIRE_YEAR, DISCOVERY_DOY, 
-                DISCOVERY_TIME, STAT_CAUSE_CODE, 
-                STAT_CAUSE_DESCR, CONT_DATE, CONT_DOY, CONT_TIME, 
-                FIRE_SIZE, FIRE_SIZE_CLASS, LATITUDE, LONGITUDE, OWNER_CODE,
-                STATE, COUNTY, FIPS_CODE, FIPS_NAME,
-                datetime(DISCOVERY_DATE) as DIS_DATETIME,
-                datetime(CONT_DATE) as CON_DATETIME
-            FROM 
-                Fires 
-            """ , engine)
-    data['DISC_YM'] = data['DIS_DATETIME'].str.extract(r'(\d{4}-\d{2})')
-
-    return data
+def load_data(path: str='fire_table_for_analysis.parquet') -> pd.DataFrame:
+    return pd.read_parquet(path)
 
 
 @st.cache

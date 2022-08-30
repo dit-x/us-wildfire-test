@@ -70,7 +70,8 @@ with st.container():
             y='count',
             color='count',
             labels={"count": "Number of wildfires", "FIPS_NAME": "County Name"},
-            width=1000
+            width=1000,
+            title=""
             )
         st.plotly_chart(top_county_fig, use_container_width=False)
         
