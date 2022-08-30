@@ -7,8 +7,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     volumes:
-      - ~/.kaggle/:/root/.kaggle:ro
-      # - ./:/wildfires_project
+      - ./:/wildfires_project
     ports:
       - 8502:8501
 
