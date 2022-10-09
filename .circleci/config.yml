@@ -25,12 +25,13 @@ jobs:
       - run:
           name: Configure Server
           command: |
-            ssh-keyscan -H ssh.pythonanywhere.com >> ~/.ssh/authorized_keys
+            ssh-keyscan -H ssh.pythonanywhere.com >> ~/.ssh/known_hosts
             cat ~/.ssh/authorized_keys
+            echo "Done"
+            echo "Done"
             cd .circleci/ansible
             cat inventory.txt
-            echo "Done"
-            ssh fiverock@ssh.pythonanywhere.com -i ~/.ssh/authorized_keys              
+            ssh fiverock@ssh.pythonanywhere.com     
             # ansible-playbook -i inventory.txt main.yml --private-key ~/.ssh/authorized_keys
 
 
