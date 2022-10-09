@@ -30,9 +30,8 @@ jobs:
             echo "Done"
             echo "Done"
             cd .circleci/ansible
-            # cat inventory.txt
-            ssh fiverock@ssh.pythonanywhere.com   -i  ~/.ssh/known_hosts
-            # ansible-playbook -i inventory.txt main.yml --private-key ~/.ssh/authorized_keys
+
+            ansible-playbook -i inventory.txt main.yml --private-key ~/.ssh/known_hosts
 
 
 workflows:
