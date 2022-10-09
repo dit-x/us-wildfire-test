@@ -1,0 +1,7 @@
+---
+- name: Exercise #1
+  hosts: all
+  user: fiverock
+
+  roles:
+   - python_anywhere

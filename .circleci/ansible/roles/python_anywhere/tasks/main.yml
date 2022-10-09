@@ -1,0 +1,16 @@
+---
+
+  - name: cd into repo
+    shell: |
+      cd /home/fiverock/repos/src 
+      echo $PWD
+    register: print_result
+
+  - name: print message
+    debug:
+      msg: "{{ print_result.stdout_lines }}"
+
+
+
+
+  

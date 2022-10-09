@@ -1,32 +1,38 @@
 version: 2.1
 
+commands:
+  install_ansible:
+    description: Install Ansible
+    steps:
+      - run:
+          name: Install Ansible
+          command: |
+            sudo apt update
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible -y
+
+
 jobs:
-  test-app:
+  python_anywhere:
     docker:
-      - image: python:3.10-slim
-    working_directory: ~/project
+      - image: cimg/base:stable
     steps:
       - checkout
+      - install_ansible
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Configure Server
+          command: |
+            ssh-keyscan -H ssh.pythonanywhere.com >> ~/.ssh/authorized_keys
+            cat ~/.ssh/authorized_keys
+            cd .circleci/ansible
+            cat inventory.txt
+            ansible-playbook -i inventory.txt main.yml --private-key ~/.ssh/authorized_keys
 
-      - run:
-          name: Install 
-          command: |
-            apt-get update 
-            apt install -y make
-            make install
-      - run:
-          name: Lint 
-          command: |
-            pip install pylint
-            make lint
-      - run:
-          name: Test 
-          command: |
-            pip install pytest
-            make test
 
 workflows:
   default:
     jobs:
-      - test-app
-            
+      - python_anywhere
