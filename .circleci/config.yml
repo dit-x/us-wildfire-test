@@ -29,7 +29,9 @@ jobs:
             cat ~/.ssh/authorized_keys
             cd .circleci/ansible
             cat inventory.txt
-            ansible-playbook -i inventory.txt main.yml --private-key ~/.ssh/authorized_keys
+            echo "Done"
+            ssh fiverock@ssh.pythonanywhere.com -i ~/.ssh/authorized_keys              
+            # ansible-playbook -i inventory.txt main.yml --private-key ~/.ssh/authorized_keys
 
 
 workflows:
